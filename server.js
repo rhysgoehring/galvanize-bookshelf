@@ -51,6 +51,10 @@ app.use(favorites);
 app.use(token);
 app.use(users);
 
+app.use('/', books);
+app.use('/books', books);
+
+
 app.use((_req, res) => {
   res.sendStatus(404);
 });
