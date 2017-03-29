@@ -7,7 +7,7 @@ const knex = require('../knex');
 const router = express.Router();
 const humps = require('humps')
 
-router.get('/books', (req, res, next) => {
+router.get('/', (req, res, next) => {
   knex('books').orderBy('title', 'asc').then((books) => {
     res.send(humps.camelizeKeys(books));
   })
@@ -17,7 +17,7 @@ router.get('/books', (req, res, next) => {
 
 });
 
-router.get('/books/:id', (req, res, next) => {
+router.get('/:id', (req, res, next) => {
   knex("books").where('id', req.params.id).then((book) => {
     res.send(humps.camelizeKeys(book[0]));
   })
@@ -26,8 +26,46 @@ router.get('/books/:id', (req, res, next) => {
   })
 });
 
-router.post('/')
+router.post('/books', (req, res, next) => {
+  var newBook = {
+    'id': req.body.id,
+    'title': req.body.title,
+    'author': req.body.author,
+    'genre': req.body.genre,
+    'description': req.body.description,
+    'cover_url': req.body.coverUrl
+  };
 
+  // if (!newBook.title) {
+  //   return res.status(400).set('Content-Type', 'text/plain').send('Genre must not be blank.');
+  // }
+  // if (!newBook.author) {
+  //   return res.status(400).set('Content-Type', 'text/plain').send('Title must not be blank.');
+  // }
+  // if (!newBook.genre) {
+  //   return res.status(400).set('Content-Type', 'text/plain').send('Genre must not be blank.');
+  // }
+  // if (!newBook.description) {
+  //   return res.status(400).set('Content-Type', 'text/plain').send('Description must not be blank.');
+  // }
+  // if (!newBook.cover_url) {
+  //   return res.status(400).set('Content-Type', 'text/plain').send('Cover URL must not be blank.');
+  // }
+
+  knex("books").insert(newBook).returning("*").then((results) => {
+     res.send(humps.camelizeKeys(results[0]));
+  })
+  .catch((err) => {
+    next(err);
+  })
+});
+
+router.patch('/books/:id', (req, res, next) => {
+  const id = Number.parseInt(req.params.id);
+
+  if (Number.isNaN(id)) {
+    return next();
+  }
 
 
 module.exports = router;
