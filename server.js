@@ -53,6 +53,7 @@ app.use(users);
 
 app.use('/', books);
 app.use('/books', books);
+app.use('/users', users); 
 
 
 app.use((_req, res) => {
