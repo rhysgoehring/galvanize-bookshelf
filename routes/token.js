@@ -9,7 +9,6 @@ const knex = require('../knex');
 const bcrypt = require('bcrypt');
 
 router.get('/', (req, res, next) => {
-  console.log("LOOK AT ME __________", req.cookie);
    if (!req.cookie) {
      res.status(200).json(false);
    } else {
