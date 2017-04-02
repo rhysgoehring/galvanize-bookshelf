@@ -42,18 +42,19 @@ app.use((req, res, next) => {
 });
 
 const books = require('./routes/books');
-const favorites = require('./routes/favorites');
+// const favorites = require('./routes/favorites');
 const token = require('./routes/token');
 const users = require('./routes/users');
 
 app.use(books);
-app.use(favorites);
+// app.use(favorites);
 app.use(token);
 app.use(users);
 
-app.use('/', books);
+// app.use('/', books);
 app.use('/books', books);
-app.use('/users', users); 
+app.use('/users', users);
+app.use('/token', token);
 
 
 app.use((_req, res) => {
