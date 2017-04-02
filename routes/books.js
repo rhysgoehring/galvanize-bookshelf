@@ -7,7 +7,7 @@ const knex = require('../knex');
 const router = express.Router();
 const humps = require('humps')
 
-router.get('/books', (req, res, next) => {
+router.get('/', (req, res, next) => {
   knex('books').orderBy('title', 'asc').then((books) => {
       res.send(humps.camelizeKeys(books));
     })
@@ -26,7 +26,7 @@ router.get('/:id', (req, res, next) => {
     })
 });
 
-router.post('/books', (req, res, next) => {
+router.post('/', (req, res, next) => {
   var newBook = {
     'id': req.body.id,
     'title': req.body.title,
@@ -60,7 +60,7 @@ router.post('/books', (req, res, next) => {
     })
 });
 
-router.patch('/books/:id', (req, res, next) => {
+router.patch(':id', (req, res, next) => {
   var bookUpdate = {
     'id': req.body.id,
     'title': req.body.title,

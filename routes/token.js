@@ -7,12 +7,13 @@ const humps = require('humps');
 const router = express.Router();
 const knex = require('../knex');
 const bcrypt = require('bcrypt');
-router.get('/token', (req, res, next) => {
+
+router.get('/', (req, res, next) => {
   console.log("in this GET");
-   if (req.cookie) {
-     res.status(200).send(false);
+   if (!req.cookie.token) {
+     res.status(200).json(false);
    } else {
-     res.status(200).send(true);
+     res.status(200).json(true);
    }
 });
 

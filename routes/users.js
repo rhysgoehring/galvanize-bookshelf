@@ -8,7 +8,7 @@ const router = express.Router();
 const humps = require('humps');
 const bcrypt = require('bcrypt');
 
-router.post('/users', (req, res, next) => {
+router.post('/', (req, res, next) => {
 // bcrypt.hash(req.body.password, 12)
 //   .then((hashed_password) => {
 knex("users").returning(["id", "first_name", "last_name", "email"]).insert({"first_name": req.body.firstName,
