@@ -21,8 +21,7 @@ router.get('/', (req, res, next) => {
 router.post('/', (req, res, next) => {
   let email = req.body.email
   let password = req.body.password
-  knex('users')
-    .where('email', email)
+  knex('users').where('email', email)
     .then((data) => {
       if (data.length > 0) {
         bcrypt.compare(password, data[0].hashed_password, (err, boolean) => {
