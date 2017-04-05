@@ -36,22 +36,6 @@ router.post('/', (req, res, next) => {
     'cover_url': req.body.coverUrl
   };
 
-  // if (!newBook.title) {
-  //   return res.status(400).set('Content-Type', 'text/plain').send('Genre must not be blank.');
-  // }
-  // if (!newBook.author) {
-  //   return res.status(400).set('Content-Type', 'text/plain').send('Title must not be blank.');
-  // }
-  // if (!newBook.genre) {
-  //   return res.status(400).set('Content-Type', 'text/plain').send('Genre must not be blank.');
-  // }
-  // if (!newBook.description) {
-  //   return res.status(400).set('Content-Type', 'text/plain').send('Description must not be blank.');
-  // }
-  // if (!newBook.cover_url) {
-  //   return res.status(400).set('Content-Type', 'text/plain').send('Cover URL must not be blank.');
-  // }
-
   knex("books").insert(newBook).returning("*").then((results) => {
       res.send(humps.camelizeKeys(results[0]));
     })

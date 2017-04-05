@@ -19,15 +19,20 @@ router.get('/', (req, res, next) => {
 
 router.get(`/check`, (req, res, next) => {
   if (!req.cookies.token) {
-    res.set('Content-Type', 'text/plain');
-    res.status(401).send('Unauthorized');
-  }
-    let bookId = req.query.bookId;
-    if (typeof bookId !== 'number') {
-      next(boom.create(400, 'Book ID must be an integer'))
+    console.log('line 23');
+    res.sendStatus(401);
+  } else {
+    knex('favorites')
+        .where('book_id', req.query.bookId)
+        .first()
+        .then((favorite) => {
+          if (!favorite) {
+            res.json(false);
+          } else {
+            res.json(true);
+          }
+        });
     }
-
-
 });
 router.post('/', (req, res, next) => {
   if (!req.cookies.token) {
