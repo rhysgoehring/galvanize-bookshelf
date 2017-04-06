@@ -49,7 +49,7 @@ router.post('/', ev(validations.post), (req, res, next) => {
 
 router.delete('/', (req, res, next) => {
   res.clearCookie('token');
-  res.status(200).send()
+  res.status(200).send(true);
 });
 
 module.exports = router;
