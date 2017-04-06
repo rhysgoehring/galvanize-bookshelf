@@ -7,8 +7,10 @@ const knex = require('../knex');
 const router = express.Router();
 const humps = require('humps');
 const bcrypt = require('bcrypt');
+const ev = require('express-validation');
+const validations = require('../validations/users');
 
-router.post('/', (req, res, next) => {
+router.post('/', ev(validations.post), (req, res, next) => {
   knex("users").returning(["id", "first_name", "last_name", "email"]).insert({
     "first_name": req.body.firstName,
     "last_name": req.body.lastName,

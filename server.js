@@ -41,6 +41,7 @@ app.use((req, res, next) => {
   res.sendStatus(406);
 });
 
+const ev = require('express-validation');
 const books = require('./routes/books');
 const favorites = require('./routes/favorites');
 const token = require('./routes/token');
@@ -67,6 +68,15 @@ app.use((err, _req, res, _next) => {
 
   // eslint-disable-next-line no-console
   console.error(err.stack);
+  res.sendStatus(500);
+});
+
+app.use((err, _req, res, _next) => {
+  if (err.status) {
+    return res.status(err.status).send(err);
+  }
+
+  console.error(err);
   res.sendStatus(500);
 });
 

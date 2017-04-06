@@ -5,7 +5,9 @@ const app = express();
 const knex = require('../knex');
 // eslint-disable-next-line new-cap
 const router = express.Router();
-const humps = require('humps')
+const humps = require('humps');
+const ev = require('express-validation');
+const validations = require('../validations/books');
 
 router.get('/', (req, res, next) => {
   knex('books').orderBy('title', 'asc').then((books) => {
@@ -26,7 +28,7 @@ router.get('/:id', (req, res, next) => {
     })
 });
 
-router.post('/', (req, res, next) => {
+router.post('/', ev(validations.post),(req, res, next) => {
   var newBook = {
     'id': req.body.id,
     'title': req.body.title,
@@ -44,7 +46,7 @@ router.post('/', (req, res, next) => {
     })
 });
 
-router.patch(':id', (req, res, next) => {
+router.patch('/:id', (req, res, next) => {
   var bookUpdate = {
     'id': req.body.id,
     'title': req.body.title,
@@ -55,7 +57,6 @@ router.patch(':id', (req, res, next) => {
   }
   knex("books").update(bookUpdate).returning("*").then((results) => {
       res.send(humps.camelizeKeys(results[0]));
-
     })
     .catch((err) => {
       next(err);

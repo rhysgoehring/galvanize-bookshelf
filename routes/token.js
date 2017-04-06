@@ -8,6 +8,8 @@ const router = express.Router();
 const knex = require('../knex');
 const bcrypt = require('bcrypt');
 const boom = require('boom');
+const ev = require('express-validation');
+const validations = require('../validations/token');
 
 
 router.get('/', (req, res, next) => {
@@ -18,7 +20,7 @@ router.get('/', (req, res, next) => {
   }
 });
 
-router.post('/', (req, res, next) => {
+router.post('/', ev(validations.post), (req, res, next) => {
   let email = req.body.email
   let password = req.body.password
   knex('users').where('email', email)
@@ -48,7 +50,6 @@ router.post('/', (req, res, next) => {
 router.delete('/', (req, res, next) => {
   res.clearCookie('token');
   res.status(200).send()
-
 });
 
 module.exports = router;
