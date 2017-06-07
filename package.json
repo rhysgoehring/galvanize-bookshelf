@@ -32,6 +32,7 @@
     "body-parser": "^1.15.2",
     "boom": "^3.2.2",
     "cookie-parser": "^1.4.3",
+    "dotenv": "^2.0.0",
     "express": "^4.14.0",
     "express-validation": "^1.0.2",
     "humps": "^1.1.0",
@@ -52,6 +53,6 @@
     "supertest": "^1.2.0"
   },
   "engines": {
-    "node": "v7.8.0"
+    "node": "v7.9.0"
   }
 }
