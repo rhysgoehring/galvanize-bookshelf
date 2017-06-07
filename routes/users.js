@@ -3,7 +3,6 @@
 const express = require('express');
 const app = express();
 const knex = require('../knex');
-// eslint-disable-next-line new-cap
 const router = express.Router();
 const humps = require('humps');
 const bcrypt = require('bcryptjs');
