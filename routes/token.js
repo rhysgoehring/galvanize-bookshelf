@@ -3,14 +3,14 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const humps = require('humps');
-// const cookieSession = require('cookie-session');
 const router = express.Router();
 const knex = require('../knex');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const boom = require('boom');
 const ev = require('express-validation');
 const validations = require('../validations/token');
 
+require ('dotenv').config();
 
 router.get('/', (req, res, next) => {
   if (!req.cookies.token) {
@@ -31,7 +31,7 @@ router.post('/', ev(validations.post), (req, res, next) => {
             let token = jwt.sign({
               email: data[0].email,
               password: data[0].hashed_password
-            }, "shhh");
+            }, process.env.JWT_KEY);
             res.cookie('token', token, {
               httpOnly: true
             });
